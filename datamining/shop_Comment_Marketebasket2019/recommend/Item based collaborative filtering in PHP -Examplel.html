@@ -1,0 +1,897 @@
+<!doctype html>
+	<!--[if !IE]>
+	<html class="no-js non-ie" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+	<!--[if IE 7 ]>
+	<html class="no-js ie7" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+	<!--[if IE 8 ]>
+	<html class="no-js ie8" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+	<!--[if IE 9 ]>
+	<html class="no-js ie9" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+	<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns#"> <!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://www.codediesel.com/xmlrpc.php">
+
+<!-- favicon -->
+
+
+<!--[if IE]><![endif]-->
+
+<title>Item based collaborative filtering in PHP - codediesel</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v4.2.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Item based collaborative filtering in PHP - codediesel" />
+<meta property="og:description" content="Most people are familiar with recommendation systems on websites, wherein after you select an item you are presented with a list of similar items other people purchased . Amazon being the popular one and also one of the first to use it. Below is shown a snapshot from Amazon. Collaborative filtering algorithms work by searching &hellip;" />
+<meta property="og:url" content="https://www.codediesel.com/php/item-based-collaborative-filtering-php/" />
+<meta property="og:site_name" content="codediesel" />
+<meta property="article:tag" content="collaborative filtering" />
+<meta property="article:section" content="data" />
+<meta property="article:published_time" content="2008-04-24T21:05:19+05:30" />
+<meta property="article:modified_time" content="2008-05-16T05:09:28+05:30" />
+<meta property="og:updated_time" content="2008-05-16T05:09:28+05:30" />
+<meta property="og:image" content="http://www.codediesel.com/wp-content/uploads/2008/04/recommend_amazon.gif" />
+<meta property="og:image" content="http://www.codediesel.com/wp-content/uploads/2008/04/recommend1.gif" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="Most people are familiar with recommendation systems on websites, wherein after you select an item you are presented with a list of similar items other people purchased . Amazon being the popular one and also one of the first to use it. Below is shown a snapshot from Amazon. Collaborative filtering algorithms work by searching [&hellip;]" />
+<meta name="twitter:title" content="Item based collaborative filtering in PHP - codediesel" />
+<meta name="twitter:image" content="http://www.codediesel.com/wp-content/uploads/2008/04/recommend_amazon.gif" />
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//secure.gravatar.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="codediesel &raquo; Feed" href="https://www.codediesel.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="codediesel &raquo; Comments Feed" href="https://www.codediesel.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="codediesel &raquo; Item based collaborative filtering in PHP Comments Feed" href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/feed/" />
+<link rel='stylesheet' id='sparkling-fonts-css'  href='//fonts.googleapis.com/css?family=Open+Sans%3A400italic%2C400%2C600%2C700%7CRoboto+Slab%3A400%2C300%2C700&#038;ver=4.8.5' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='https://www.codediesel.com/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='mn_cache_5a8cdca8a19de-css'  href='//www.codediesel.com/wp-content/uploads/mn_combine/e077ee6efd6a4910eb327c26c1cb86cb.css?ver=4.8.5' type='text/css' media='all' />
+<script type='text/javascript' src='//www.codediesel.com/wp-content/uploads/mn_combine/6bb8783e03eb0ff2e16236dc247995c2.js?ver=4.8.5'></script>
+<script type='text/javascript' src='https://www.codediesel.com/wp-content/plugins/jetpack/modules/related-posts/related-posts.js?ver=20141201'></script>
+<link rel='https://api.w.org/' href='https://www.codediesel.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.codediesel.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.codediesel.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.8.5" />
+<link rel='shortlink' href='https://wp.me/p5WjUz-r' />
+<link rel="alternate" type="application/json+oembed" href="https://www.codediesel.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.codediesel.com%2Fphp%2Fitem-based-collaborative-filtering-php%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.codediesel.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.codediesel.com%2Fphp%2Fitem-based-collaborative-filtering-php%2F&#038;format=xml" />
+
+
+
+
+<!-- Meta tags added by Robots Meta: http://yoast.com/wordpress/meta-robots-wordpress-plugin/ -->
+<meta name="robots" content="noarchive" />
+<script type="text/javascript">
+	window._wp_rp_static_base_url = 'https://wprp.zemanta.com/static/';
+	window._wp_rp_wp_ajax_url = "https://www.codediesel.com/wp-admin/admin-ajax.php";
+	window._wp_rp_plugin_version = '3.5.3';
+	window._wp_rp_post_id = '27';
+	window._wp_rp_num_rel_posts = '6';
+	window._wp_rp_thumbnails = false;
+	window._wp_rp_post_title = 'Item+based+collaborative+filtering+in+PHP';
+	window._wp_rp_post_tags = ['collaborative+filtering', 'php', 'data', 'filter', 'system', 'rate', 'jewelri', 'download', 'a', 'book', 'amazon', 'data', 'movi', 'alt', 'search', 'php', 'blog', 'list'];
+	window._wp_rp_promoted_content = false;
+</script>
+<script type="text/javascript" src="https://wprp.zemanta.com/static/js/loader.js?version=3.5.3" async></script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">.well .social-icons a {background-color: #dd3333 !important ;}.entry-content {font-family: Open Sans; font-size:14px; font-weight: normal; color:#000000;}.single .post-inner-content.secondary-content-box {
+  display: none;
+}
+
+#secondary .widget {
+ color: #6d6d6d;
+}
+
+#secondary .widget a {
+    color: #6d6d6d;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1270px;
+    } 
+}
+
+.entry-content {
+  margin-top: 15px;
+}
+</style>	<style type="text/css">
+			.navbar > .container .navbar-brand {
+			color: #ffffff;
+		}
+		</style>
+	
+<style id="custom-css-css">/*
+Welcome to Custom CSS!
+
+CSS (Cascading Style Sheets) is a kind of code that tells the browser how
+to render a web page. You may delete these comments and get started with
+your customizations.
+
+By default, your stylesheet will be loaded after the theme stylesheets,
+which means that your rules can take precedence and override the theme CSS
+rules. Just write here what you want to change, you don't need to copy all
+your theme's stylesheet content.
+*/</style>
+<script type='application/ld+json'>{"@context":"http://schema.org","@type":"WebSite","url":"http://codediesel.com/","name":"Codediesel","potentialAction":{"@type":"SearchAction","target":"http://codediesel.com/?s={search_term_string}&submit=Go","query-input":"required name=search_term_string"}}</script>    
+</head>
+
+<body class="post-template-default single single-post postid-27 single-format-standard">
+<div id="fb-root"></div><script>(function(d, s, id) {  var js, fjs = d.getElementsByTagName(s)[0];  if (d.getElementById(id)) return;  js = d.createElement(s); js.id = id;  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=150545218452827&status=0&version=v2.0";  fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));</script>
+<div id="page" class="hfeed site">
+
+	<header id="masthead" class="site-header" role="banner">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container">
+				<div class="row">
+					<div class="site-navigation-inner col-sm-12">
+		        <div class="navbar-header">
+		            <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+		                <span class="sr-only">Toggle navigation</span>
+		                <span class="icon-bar"></span>
+		                <span class="icon-bar"></span>
+		                <span class="icon-bar"></span>
+		            </button>
+
+				
+				
+					<div id="logo">
+						<span class="site-name"><a class="navbar-brand" href="https://www.codediesel.com/" title="codediesel" rel="home">codediesel</a></span>
+					</div><!-- end of #logo -->
+
+				
+		        </div>
+					<div class="collapse navbar-collapse navbar-ex1-collapse"><ul id="menu-logo-bar" class="nav navbar-nav"><li id="menu-item-3512" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3512"><a title="Web Scraping eBook" href="https://leanpub.com/web-scraping">Web Scraping eBook</a></li>
+<li id="menu-item-3516" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3516"><a title="WP Plugins" href="https://www.codediesel.com/plugins/">WP Plugins</a></li>
+<li id="menu-item-3520" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3520"><a title="Services / Work" href="https://www.codediesel.com/services/">Services / Work</a></li>
+<li id="menu-item-3521" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3521"><a title="Archives" href="https://www.codediesel.com/archives/">Archives</a></li>
+<li id="menu-item-3522" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3522"><a title="About" href="https://www.codediesel.com/about/">About</a></li>
+<li id="menu-item-3533" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3533"><a title="Content Index" href="https://www.codediesel.com/content-index/">Content Index</a></li>
+</ul></div>					</div>
+		    </div>
+		  </div>
+		</nav><!-- .site-navigation -->
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+		<div class="top-section">
+								</div>
+
+		<div class="container main-content-area">
+			<div class="row">
+				<div class="main-content-inner col-sm-12 col-md-8 pull-left">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		
+			
+<article id="post-27" class="post-27 post type-post status-publish format-standard hentry category-data category-php tag-collaborative-filtering">
+
+
+		<div class="post-inner-content">
+		<header class="entry-header page-header">
+
+			<h1 class="entry-title ">Item based collaborative filtering in PHP</h1>
+
+			<div class="entry-meta">
+				<span class="posted-on"><i class="fa fa-calendar"></i> <a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/" rel="bookmark"><time class="entry-date published" datetime="2008-04-24T21:05:19+00:00">April 24, 2008</time><time class="updated" datetime="2008-05-16T05:09:28+00:00">May 16, 2008</time></a></span><span class="byline"> <i class="fa fa-user"></i> <span class="author vcard"><a class="url fn n" href="https://www.codediesel.com/author/admin/">sameer</a></span></span>
+								<span class="cat-links"><i class="fa fa-folder-open-o"></i>
+					 <a href="https://www.codediesel.com/category/data/" rel="category tag">data</a>, <a href="https://www.codediesel.com/category/php/" rel="category tag">php</a>				</span>
+								
+			</div><!-- .entry-meta -->
+		</header><!-- .entry-header -->
+
+		<div class="entry-content">
+			
+<!-- Quick Adsense WordPress Plugin: http://quicksense.net/ -->
+<div style="float:none;margin:10px 0 10px 0;text-align:center;">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- link-ads footer -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3476693800710463"
+     data-ad-slot="7499960208"
+     data-ad-format="link"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<p>Most people are familiar with recommendation systems on websites, wherein after you select an item you are presented with a list of similar items other people purchased . Amazon being the popular one and also one of the first to use it. Below is shown a snapshot from Amazon.</p>
+<p>Collaborative filtering algorithms work by searching a large group of users or items and finding a smaller llist from it with tastes similar to yours.<span id="more-27"></span></p>
+<p><a href="http://www.codediesel.com/wp-content/uploads/2008/04/recommend_amazon.gif"><img class="alignnone size-full wp-image-28" title="recommend_amazon" src="http://www.codediesel.com/wp-content/uploads/2008/04/recommend_amazon.gif" alt="" width="500" height="143" srcset="https://www.codediesel.com/wp-content/uploads/2008/04/recommend_amazon.gif 543w, https://www.codediesel.com/wp-content/uploads/2008/04/recommend_amazon-300x86.gif 300w" sizes="(max-width: 500px) 100vw, 500px" /></a></p>
+<p>In this post I&#8217;ll show you how to integrate a simple recommendation system. You can download the class file <a href="http://www.codediesel.com/data/code/sample_recommend.zip" target="_blank">here</a>.</p>
+<p>We will work with the following book data as an example.</p>
+<p><a href="http://www.codediesel.com/wp-content/uploads/2008/04/recommend1.gif"><img class="aligncenter size-full wp-image-29" title="recommend1" src="http://www.codediesel.com/wp-content/uploads/2008/04/recommend1.gif" alt="sample data" width="297" height="349" srcset="https://www.codediesel.com/wp-content/uploads/2008/04/recommend1.gif 297w, https://www.codediesel.com/wp-content/uploads/2008/04/recommend1-255x300.gif 255w" sizes="(max-width: 297px) 100vw, 297px" /></a></p>
+<p>It shows a list of books purchased by various people and rated on a scale of 5 by them. The list can be any thing &#8211; books, jewelry, movies, blog posts; any items where ratings are possible. You have to create this array at runtime form the database.</p>
+<p>Our job here will be to use this list to recommend books. The above list is converted into an array here.</p>
+
+<div class="wp_codebox"><table><tr id="p2725"><td class="code" id="p27code25"><pre class="php" style="font-family:monospace;"><span style="color: #000088;">$books</span> <span style="color: #339933;">=</span>  <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span>
+&nbsp;
+    <span style="color: #0000ff;">&quot;phil&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;my girl&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;the god delusion&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #339933;">,</span>
+                    <span style="color: #0000ff;">&quot;tweak&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">3</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;the shack&quot;</span> <span style="color: #339933;">=&gt;;</span> <span style="color: #cc66cc;">4</span><span style="color: #339933;">,</span>
+                    <span style="color: #0000ff;">&quot;the birds in my life&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span><span style="color: #339933;">,</span>
+                    <span style="color: #0000ff;">&quot;new moon&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+&nbsp;
+    <span style="color: #0000ff;">&quot;sameer&quot;</span> <span style="color: #339933;">=&amp;</span>gt<span style="color: #339933;">;</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;the last lecture&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span><span style="color: #339933;">,</span>
+                      <span style="color: #0000ff;">&quot;the god delusion&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #339933;">,</span>
+                      <span style="color: #0000ff;">&quot;the noble wilds&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">3</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;the shack&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #339933;">,</span>
+                      <span style="color: #0000ff;">&quot;the birds in my life&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;new moon&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+&nbsp;
+    <span style="color: #0000ff;">&quot;john&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;a thousand splendid suns&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">5</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;the secret&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #339933;">,</span>
+                    <span style="color: #0000ff;">&quot;tweak&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+&nbsp;
+    <span style="color: #0000ff;">&quot;peter&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;chaos&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">5</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;php in action&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+&nbsp;
+    <span style="color: #0000ff;">&quot;jill&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;the last lecture&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">1.5</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;the secret&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span><span style="color: #339933;">,</span>
+                    <span style="color: #0000ff;">&quot;the noble wilds&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">4</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;the host: a novel&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #339933;">,</span>
+                    <span style="color: #0000ff;">&quot;the world without end&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;new moon&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+&nbsp;
+    <span style="color: #0000ff;">&quot;bruce&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;the last lecture&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">3</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;the hollow&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">1.5</span><span style="color: #339933;">,</span>
+                     <span style="color: #0000ff;">&quot;the noble wilds&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">3</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;the shack&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span><span style="color: #339933;">,</span>
+                     <span style="color: #0000ff;">&quot;the appeal&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">2</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;new moon&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+&nbsp;
+    <span style="color: #0000ff;">&quot;tom&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;chaos&quot;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span><span style="color: #009900;">&#41;</span>
+&nbsp;
+<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></td></tr></table></div>
+
+<p>Lets start by including the class file first.</p>
+
+<div class="wp_codebox"><table><tr id="p2726"><td class="code" id="p27code26"><pre class="php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">require_once</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;recommend.php&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></td></tr></table></div>
+
+<p>Lets say you are &#8216;John&#8217; and the books you have purchased till now are &#8216;a thousand splendid suns&#8217;, &#8216;the secret&#8217; and &#8216;tweak&#8217; with appropriate rating given. If you come to the website again what books would the site recommend. Lets try!</p>
+<!-- Quick Adsense WordPress Plugin: http://quicksense.net/ -->
+<div style="float:none;margin:0px 0 0px 0;text-align:center;">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- inline-small-ad-square1 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-3476693800710463"
+     data-ad-slot="3367592209"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+<div class="wp_codebox"><table><tr id="p2727"><td class="code" id="p27code27"><pre class="php" style="font-family:monospace;"><span style="color: #000088;">$re</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> Recommend<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #990000;">print_r</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$re</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getRecommendations</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$books</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;john&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></td></tr></table></div>
+
+<p>It will output the following with appropriate ratings and sorted in descending order.</p>
+
+<div class="wp_codebox"><table><tr id="p2728"><td class="code" id="p27code28"><pre class="php" style="font-family:monospace;"><span style="color: #990000;">Array</span>
+<span style="color: #009900;">&#40;</span>
+    <span style="color: #009900;">&#91;</span>the noble wilds<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;;</span> <span style="color: #cc66cc;">4</span>
+    <span style="color: #009900;">&#91;</span>the shack<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">4</span>
+    <span style="color: #009900;">&#91;</span>the host<span style="color: #339933;">:</span> a novel<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+    <span style="color: #009900;">&#91;</span><span style="color: #000000; font-weight: bold;">new</span> moon<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+    <span style="color: #009900;">&#91;</span>the god delusion<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+    <span style="color: #009900;">&#91;</span>the world without <span style="color: #990000;">end</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;;</span> <span style="color:#800080;">2.5</span>
+    <span style="color: #009900;">&#91;</span>the birds in my life<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;;</span> <span style="color:#800080;">2.5</span>
+    <span style="color: #009900;">&#91;</span>my girl<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span>
+    <span style="color: #009900;">&#91;</span>the last lecture<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">1.5</span>
+<span style="color: #009900;">&#41;</span></pre></td></tr></table></div>
+
+<p>Now lets try with &#8216;tom&#8217;.</p>
+
+<div class="wp_codebox"><table><tr id="p2729"><td class="code" id="p27code29"><pre class="php" style="font-family:monospace;"><span style="color: #000088;">$re</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> Recommend<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #990000;">print_r</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$re</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getRecommendations</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$books</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;tom&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></td></tr></table></div>
+
+<p>The recommended books will be&#8230;</p>
+
+<div class="wp_codebox"><table><tr id="p2730"><td class="code" id="p27code30"><pre class="php" style="font-family:monospace;"><span style="color: #990000;">Array</span>
+<span style="color: #009900;">&#40;</span>
+<span style="color: #009900;">&#91;</span>php in action<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+<span style="color: #009900;">&#41;</span></pre></td></tr></table></div>
+
+<p>Now how about recommending items based on book name rather then on the person. For that what we have to do is invert the array using the &#8216;transformPreferences&#8217; function and then use the &#8216;matchItems&#8217; function.</p>
+<p>Inverting the array like this</p>
+
+<div class="wp_codebox"><table><tr id="p2731"><td class="code" id="p27code31"><pre class="php" style="font-family:monospace;"><span style="color: #000088;">$result</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$re</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">transformPreferences</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$books</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></td></tr></table></div>
+
+<p>will return an array as show below.</p>
+
+<div class="wp_codebox"><table><tr id="p2732"><td class="code" id="p27code32"><pre class="php" style="font-family:monospace;">rray
+<span style="color: #009900;">&#40;</span>
+    <span style="color: #009900;">&#91;</span>my girl<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">Array</span>
+        <span style="color: #009900;">&#40;</span>
+            <span style="color: #009900;">&#91;</span>phil<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span>
+        <span style="color: #009900;">&#41;</span>
+&nbsp;
+    <span style="color: #009900;">&#91;</span>the god delusion<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">Array</span>
+        <span style="color: #009900;">&#40;</span>
+            <span style="color: #009900;">&#91;</span>phil<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+            <span style="color: #009900;">&#91;</span>sameer<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+        <span style="color: #009900;">&#41;</span>
+&nbsp;
+    <span style="color: #009900;">&#91;</span>tweak<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">Array</span>
+        <span style="color: #009900;">&#40;</span>
+            <span style="color: #009900;">&#91;</span>phil<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">3</span>
+            <span style="color: #009900;">&#91;</span>john<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">1</span>
+        <span style="color: #009900;">&#41;</span>
+&nbsp;
+    <span style="color: #009900;">&#91;</span>the shack<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">Array</span>
+        <span style="color: #009900;">&#40;</span>
+            <span style="color: #009900;">&#91;</span>phil<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">4</span>
+            <span style="color: #009900;">&#91;</span>sameer<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+            <span style="color: #009900;">&#91;</span>bruce<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+        <span style="color: #009900;">&#41;</span>
+&nbsp;
+    <span style="color: #009900;">&#91;</span>the birds in my life<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&amp;</span>gt<span style="color: #339933;">;</span> <span style="color: #990000;">Array</span>
+        <span style="color: #009900;">&#40;</span>
+            <span style="color: #009900;">&#91;</span>phil<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span>
+            <span style="color: #009900;">&#91;</span>sameer<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;;</span> <span style="color:#800080;">2.5</span>
+        <span style="color: #009900;">&#41;</span>
+&nbsp;
+    <span style="color: #009900;">&#91;</span><span style="color: #000000; font-weight: bold;">new</span> moon<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&amp;</span>gt<span style="color: #339933;">;</span> <span style="color: #990000;">Array</span>
+        <span style="color: #009900;">&#40;</span>
+            <span style="color: #009900;">&#91;</span>phil<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+            <span style="color: #009900;">&#91;</span>sameer<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">1</span>
+            <span style="color: #009900;">&#91;</span>jill<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">3.5</span>
+            <span style="color: #009900;">&#91;</span>bruce<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">3</span>
+        <span style="color: #009900;">&#41;</span>
+&nbsp;
+    <span style="color: #009900;">&#91;</span>the last lecture<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #990000;">Array</span>
+        <span style="color: #009900;">&#40;</span>
+            <span style="color: #009900;">&#91;</span>sameer<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">2.5</span>
+            <span style="color: #009900;">&#91;</span>jill<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">1.5</span>
+            <span style="color: #009900;">&#91;</span>bruce<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">3</span>
+        <span style="color: #009900;">&#41;</span>
+&nbsp;
+<span style="color: #339933;">.</span>
+<span style="color: #339933;">.</span>
+<span style="color: #339933;">.</span>
+<span style="color: #339933;">.</span></pre></td></tr></table></div>
+
+<p>Lets try with the book &#8216;chaos&#8217; and see what the system will recommend us.</p>
+
+<div class="wp_codebox"><table><tr id="p2733"><td class="code" id="p27code33"><pre class="php" style="font-family:monospace;"><span style="color: #000088;">$re</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> Recommend<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000088;">$result</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$re</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">transformPreferences</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$books</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #990000;">print_r</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$re</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">matchItems</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$result</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;chaos&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></td></tr></table></div>
+
+<p>The out will be.</p>
+
+<div class="wp_codebox"><table><tr id="p2734"><td class="code" id="p27code34"><pre class="php" style="font-family:monospace;"><span style="color: #990000;">Array</span>
+<span style="color: #009900;">&#40;</span>
+<span style="color: #009900;">&#91;</span>php in action<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=&gt;</span> <span style="color:#800080;">0.4</span>
+<span style="color: #009900;">&#41;</span></pre></td></tr></table></div>
+
+<p>But now the value on the right is not a rating but a match probability from a scale of 0 &#8211; 1, 1 being a perfect match. If you change the rating of the &#8216;php in action book&#8217; in the above array to 5 and then run the above code again you will get the match probability as &#8216;1&#8217;.</p>
+<p>You can also find how similar the choice of two persons is on a scale of 0-1.</p>
+
+<div class="wp_codebox"><table><tr id="p2735"><td class="code" id="p27code35"><pre class="php" style="font-family:monospace;"><span style="color: #000088;">$similarity</span> <span style="color: #339933;">=</span>  <span style="color: #000088;">$re</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">similarityDistance</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$books</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;tom&quot;</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;peter&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #DD1144; font-style: normal;">//Converted to percent.</span>
+<span style="color: #000000; font-weight: bold;">echo</span> <span style="color: #990000;">sprintf</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;<span style="color: #009933; font-weight: bold;">%.2f</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #000088;">$similarity</span> <span style="color: #339933;">*</span> <span style="color: #cc66cc;">100</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">.</span> <span style="color: #0000ff;">&quot;%&quot;</span><span style="color: #339933;">;</span></pre></td></tr></table></div>
+
+<p>Will return</p>
+
+<div class="wp_codebox"><table><tr id="p2736"><td class="code" id="p27code36"><pre class="php" style="font-family:monospace;"><span style="color:#800080;">28.57</span><span style="color: #339933;">%</span></pre></td></tr></table></div>
+
+<p>This simplified filtering system can be used on a site with a few thousand items and members. But as the number of items grows it will be time consuming to calculate the recommendations every time someone purchases or browses an item. In that case it will be helpful to precalculate the array and store it in a database maybe once a day. But that is a different story altogether. For more information on the algorithms and variations you can refer to the wonderful <a title="Programming collective intelligence" href="http://www.amazon.com/Programming-Collective-Intelligence-Building-Applications/dp/0596529325/ref=pd_bbs_sr_1?ie=UTF8&amp;s=books&amp;qid=1209100464&amp;sr=1-1" target="_blank">Programming Collective Intelligence: Building Smart Web 2.0 Applications</a>. The code examples in the book are in Python, though.</p>
+<p>The above code may not work in each and every instance but you can tweak the code according to your requirements.</p>
+<p><a class="download" href="http://www.codediesel.com/data/code/sample_recommend.zip">Download code</a></p>
+
+<!-- Quick Adsense WordPress Plugin: http://quicksense.net/ -->
+<div style="float:none;margin:10px 0 10px 0;text-align:center;">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- post-bottom -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3476693800710463"
+     data-ad-slot="5258711806"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div style="font-size:0px;height:0px;line-height:0px;margin:0;padding:0;clear:both"></div><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-27" class="share-facebook sd-button share-icon no-text" href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/?share=facebook" target="_blank" title="Share on Facebook"><span></span><span class="sharing-screen-reader-text">Share on Facebook (Opens in new window)</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-27" class="share-twitter sd-button share-icon no-text" href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/?share=twitter" target="_blank" title="Click to share on Twitter"><span></span><span class="sharing-screen-reader-text">Click to share on Twitter (Opens in new window)</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-27" class="share-google-plus-1 sd-button share-icon no-text" href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span></span><span class="sharing-screen-reader-text">Click to share on Google+ (Opens in new window)</span></a></li><li class="share-stumbleupon"><a rel="nofollow" data-shared="" class="share-stumbleupon sd-button share-icon no-text" href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/?share=stumbleupon" target="_blank" title="Click to share on StumbleUpon"><span></span><span class="sharing-screen-reader-text">Click to share on StumbleUpon (Opens in new window)</span></a></li><li class="share-linkedin"><a rel="nofollow" data-shared="sharing-linkedin-27" class="share-linkedin sd-button share-icon no-text" href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span></span><span class="sharing-screen-reader-text">Click to share on LinkedIn (Opens in new window)</span></a></li><li class="share-end"></li></ul></div></div></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div>            	      <!-- tags -->
+	      <div class="tagcloud">
+
+	          <a href="https://www.codediesel.com/tag/collaborative-filtering/">collaborative filtering</a> 
+	      </div>
+	      <!-- end tags -->
+	                             
+            
+                        
+          
+			
+		</div><!-- .entry-content -->
+
+		<footer class="entry-meta">
+
+	    	
+
+		</footer><!-- .entry-meta -->
+        
+	</div>
+				<div class="post-inner-content secondary-content-box">
+	        <!-- author bio -->
+	        <div class="author-bio content-box-inner">
+
+	          <!-- avatar -->
+	          <div class="avatar">
+	              <img alt='' src='https://secure.gravatar.com/avatar/fa9df688ce1e6ff39052faa763e839ff?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/fa9df688ce1e6ff39052faa763e839ff?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />	          </div>
+	          <!-- end avatar -->
+
+	          <!-- user bio -->
+	          <div class="author-bio-content">
+
+	            <h4 class="author-name"><a href="https://www.codediesel.com/author/admin/">sameer</a></h4>
+	            <p class="author-description">
+	                	            </p>
+
+	          </div>
+	          <!-- end author bio -->
+
+	        </div>
+	        <!-- end author bio -->
+			</div>
+            </article><!-- #post-## -->
+
+
+
+			
+<div id="comments" class="comments-area hidden-print">
+
+	
+			<h2 class="comments-title">
+			9 thoughts on &ldquo;<span>Item based collaborative filtering in PHP</span>&rdquo;		</h2>
+
+		
+		<ol class="comment-list">
+					<li id="comment-1229" class="comment even thread-even depth-1">
+			<article id="div-comment-1229" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/18320e079f1ddabbe3da260862da5422?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/18320e079f1ddabbe3da260862da5422?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn">Adrian Puiu</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-1229">
+							<time datetime="2009-06-02T23:11:23+00:00">
+								June 2, 2009 at 11:11 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>for those who don&#8217;t have the names of books in table just use explode to extract the the id of the product:</p>
+<p>foreach($recommendation as $key =&gt; $value)<br />
+			{<br />
+			if($z &gt; 5)<br />
+			{<br />
+				break;<br />
+			}<br />
+			$key_parts = explode(&#8216;_&#8217;, $key);</p>
+<p>			$product_id = $key_parts[1]	;			</p>
+<p>			$html .= show_product($product_id);</p>
+<p>			$z++;</p>
+<p>where key is $product_id</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1247" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-1247" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/36dc72c71689d9eb40aa77eb16a858f3?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/36dc72c71689d9eb40aa77eb16a858f3?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn"><a href='http://www.wotlkgolds.com' rel='external nofollow' class='url'>wow gold</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-1247">
+							<time datetime="2009-06-12T02:01:41+00:00">
+								June 12, 2009 at 2:01 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>this is exactly the post I needed to see!</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1434" class="comment even thread-even depth-1">
+			<article id="div-comment-1434" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/efb3bdf6c4e986163a6130af4af2c8ea?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/efb3bdf6c4e986163a6130af4af2c8ea?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn"><a href='http://www.ibay24.fr' rel='external nofollow' class='url'>dofus kamas</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-1434">
+							<time datetime="2009-10-06T21:50:29+00:00">
+								October 6, 2009 at 9:50 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>this is exactly the post I needed to see!</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1651" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-1651" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3b0983a56a8dfa1a2d871bf792142592?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/3b0983a56a8dfa1a2d871bf792142592?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn">Malscorpion</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-1651">
+							<time datetime="2010-01-28T12:10:20+00:00">
+								January 28, 2010 at 12:10 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>thank you verry much .</p>
+<p>this posted subject is begin my project.</p>
+<p>now my project just complete .</p>
+<p>everybody interresting in recommender system collaborative filtering </p>
+<p>and understand You can send question to me at  </p>
+<p><a href="mailto:malscorpio@hotmail.com">malscorpio@hotmail.com</a></p>
+<p>if that problem I can help you .I pleased.</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1694" class="comment even thread-even depth-1">
+			<article id="div-comment-1694" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/5b77508591784b11c53fe74505b36a53?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/5b77508591784b11c53fe74505b36a53?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn"><a href='http://www.metin2.mobi' rel='external nofollow' class='url'>metin2yang</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-1694">
+							<time datetime="2010-03-01T23:47:20+00:00">
+								March 1, 2010 at 11:47 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>this is great artic!very good!</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-19700" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-19700" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/15331e565aac95e586fdcbb9818b1e64?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/15331e565aac95e586fdcbb9818b1e64?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn"><a href='http://www.twoh.web.id' rel='external nofollow' class='url'>twoh</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-19700">
+							<time datetime="2013-04-07T21:22:00+00:00">
+								April 7, 2013 at 9:22 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>What method do you use for calculating the similarity ?</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-19705" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1">
+			<article id="div-comment-19705" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/fa9df688ce1e6ff39052faa763e839ff?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/fa9df688ce1e6ff39052faa763e839ff?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn"><a href='http://www.codediesel.com' rel='external nofollow' class='url'>sameer</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-19705">
+							<time datetime="2013-04-07T22:34:35+00:00">
+								April 7, 2013 at 10:34 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Euclidean Distance score</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-37746" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-37746" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/907c2077537e484c354be657dce9449b?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/907c2077537e484c354be657dce9449b?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn"><a href='http://google.com' rel='external nofollow' class='url'>zeeshan</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-37746">
+							<time datetime="2014-06-03T07:19:27+00:00">
+								June 3, 2014 at 7:19 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Can you do it using data from data base</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-37839" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1">
+			<article id="div-comment-37839" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/fa9df688ce1e6ff39052faa763e839ff?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/fa9df688ce1e6ff39052faa763e839ff?s=120&amp;d=mm&amp;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' />						<b class="fn"><a href='http://www.codediesel.com' rel='external nofollow' class='url'>sameer</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://www.codediesel.com/php/item-based-collaborative-filtering-php/#comment-37839">
+							<time datetime="2014-06-03T19:46:18+00:00">
+								June 3, 2014 at 7:46 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Yes, with a suitable interface.</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+			<p class="no-comments">Comments are closed.</p>
+	
+	
+</div><!-- #comments -->
+
+				<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Post navigation</h1>
+		<div class="nav-links">
+			<div class="nav-previous"><a href="https://www.codediesel.com/php/6-books-to-master-php/" rel="prev"><i class="fa fa-chevron-left"></i> 6 books to master PHP</a></div><div class="nav-next"><a href="https://www.codediesel.com/microsoft/microsoft-live-mesh/" rel="next">Microsoft Live Mesh. The exciting world ahead! <i class="fa fa-chevron-right"></i></a></div>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+</div>
+	<div id="secondary" class="widget-area col-sm-12 col-md-4 hidden-print" role="complementary">
+		<div class="well">
+						<aside id="search-3" class="widget widget_search"><form method="get" class="form-search" action="https://www.codediesel.com/">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="input-group">
+        <input type="text" class="form-control search-query" value="" name="s" id="s" placeholder="Search...">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-default" name="submit" id="searchsubmit" value="Go"><span class="glyphicon glyphicon-search"></span></button>
+        </span>
+      </div>
+    </div>
+  </div>
+</form></aside><aside id="blog_subscription-2" class="widget jetpack_subscription_widget"><h3 class="widget-title">Subscribe to Blog via Email</h3>
+			<form action="#" method="post" accept-charset="utf-8" id="subscribe-blog-blog_subscription-2">
+				<div id="subscribe-text"><p>Enter your email address to subscribe to this blog and receive notifications of new posts by email.</p>
+</div>					<p id="subscribe-email">
+						<label id="jetpack-subscribe-label" for="subscribe-field">
+							Email Address						</label>
+						<input type="email" name="email" value="" id="subscribe-field" placeholder="Email Address" />
+					</p>
+
+					<p id="subscribe-submit">
+						<input type="hidden" name="action" value="subscribe" />
+						<input type="hidden" name="source" value="https://www.codediesel.com/php/item-based-collaborative-filtering-php/" />
+						<input type="hidden" name="sub-type" value="widget" />
+						<input type="hidden" name="redirect_fragment" value="blog_subscription-2" />
+												<input type="submit" value="Subscribe" name="jetpack_subscriptions_widget" />
+					</p>
+							</form>
+
+			<script>
+				( function( d ) {
+					if ( ( 'placeholder' in d.createElement( 'input' ) ) ) {
+						var label = d.getElementById( 'jetpack-subscribe-label' );
+	 					label.style.clip 	 = 'rect(1px, 1px, 1px, 1px)';
+	 					label.style.position = 'absolute';
+	 					label.style.height   = '1px';
+	 					label.style.width    = '1px';
+	 					label.style.overflow = 'hidden';
+					}
+				} ) ( document );
+			</script>
+		 
+		
+</aside><aside id="text-3" class="widget widget_text">			<div class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- imagead-sidebar -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-3476693800710463"
+     data-ad-slot="4009766543"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+		</aside><aside id="text-6" class="widget widget_text"><h3 class="widget-title">Write Guest Posts</h3>			<div class="textwidget">I accept guests posts. So if you are interested in sharing anything related to PHP, MySQL or web programming in general, you can forward your article ideas to me.</div>
+		</aside>		<aside id="recent-posts-4" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+					<li>
+				<a href="https://www.codediesel.com/data/6-data-visualization-javascript-libraries/">6 data visualization javascript libraries</a>
+						</li>
+					<li>
+				<a href="https://www.codediesel.com/wordpress/switching-wordpress-https/">Switching WordPress to HTTPS</a>
+						</li>
+					<li>
+				<a href="https://www.codediesel.com/go/querying-mysql-go/">Querying MySQL in Go</a>
+						</li>
+					<li>
+				<a href="https://www.codediesel.com/frameworks/introducing-ponzu-cms-server-framework-go/">Introducing Ponzu: a CMS and Server Framework in Go</a>
+						</li>
+					<li>
+				<a href="https://www.codediesel.com/data/scraping-uber-ride-history-data/">Scraping Uber ride history data</a>
+						</li>
+					<li>
+				<a href="https://www.codediesel.com/api/accessing-google-page-insights-php/">Accessing Google Page Insights in PHP</a>
+						</li>
+				</ul>
+		</aside>		<aside id="text-4" class="widget widget_text">			<div class="textwidget"><a href="https://leanpub.com/web-scraping"><img width="300px;" src="https://www.codediesel.com/wp-content/themes/compositio/images/web-scraping-ebook.jpg" /></a></div>
+		</aside>		</div>
+	</div><!-- #secondary -->
+			</div><!-- close .*-inner (main-content or sidebar, depending if sidebar is used) -->
+		</div><!-- close .row -->
+	</div><!-- close .container -->
+</div><!-- close .site-content -->
+
+	<div id="footer-area hidden-print">
+		<div class="container footer-inner">
+			<div class="row">
+				
+				</div>
+		</div>
+
+		<footer id="colophon" class="site-footer hidden-print" role="contentinfo">
+			<div class="site-info container">
+				<div class="row">
+					<div class="social-icons"><a href="https://www.facebook.com/codediesel" title="Follow us on Facebook" class="facebook" target="_blank"><i class="social_icon fa fa-facebook"></i></a><a href="https://twitter.com/codediesel" title="Follow us on Twitter" class="twitter" target="_blank"><i class="social_icon fa fa-twitter"></i></a><a href="https://plus.google.com/+SameerBorate" title="Follow us on Google+" class="googleplus" target="_blank"><i class="social_icon fa fa-googleplus"></i></a><a href="http://feeds.feedburner.com/Code-diesel" title="Follow us on RSS" class="rss" target="_blank"><i class="social_icon fa fa-rss"></i></a><a href="https://github.com/codediesel" title="Follow us on GitHub" class="github" target="_blank"><i class="social_icon fa fa-github"></i></a></div>					<nav role="navigation" class="col-md-6">
+											</nav>
+					<div class="copyright col-md-6">
+						<a href="http://www.codediesel.com/" title="code-diesel">code-diesel</a>  All rights reserved.						Theme by <a href="http://colorlib.com/" target="_blank">Colorlib</a> Powered by <a href="http://wordpress.org/" target="_blank">WordPress</a>					</div>
+				</div>
+			</div><!-- .site-info -->
+			<div class="scroll-to-top"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+		</footer><!-- #colophon -->
+	</div>
+</div><!-- #page -->
+
+	<div style="display:none">
+	<div class="grofile-hash-map-fa9df688ce1e6ff39052faa763e839ff">
+	</div>
+	<div class="grofile-hash-map-18320e079f1ddabbe3da260862da5422">
+	</div>
+	<div class="grofile-hash-map-36dc72c71689d9eb40aa77eb16a858f3">
+	</div>
+	<div class="grofile-hash-map-efb3bdf6c4e986163a6130af4af2c8ea">
+	</div>
+	<div class="grofile-hash-map-3b0983a56a8dfa1a2d871bf792142592">
+	</div>
+	<div class="grofile-hash-map-5b77508591784b11c53fe74505b36a53">
+	</div>
+	<div class="grofile-hash-map-15331e565aac95e586fdcbb9818b1e64">
+	</div>
+	<div class="grofile-hash-map-907c2077537e484c354be657dce9449b">
+	</div>
+	</div>
+
+	<script type="text/javascript">
+		WPCOM_sharing_counts = {"https:\/\/www.codediesel.com\/php\/item-based-collaborative-filtering-php\/":27}	</script>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-linkedin' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+		});
+		</script>
+		<link rel='stylesheet' id='jetpack_css-css'  href='https://www.codediesel.com/wp-content/plugins/jetpack/css/jetpack.css?ver=3.4.3' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201808'></script>
+<script type='text/javascript' src='https://secure.gravatar.com/js/gprofiles.js?ver=2018Febaa'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.codediesel.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.8.5'></script>
+<script type='text/javascript' src='https://www.codediesel.com/wp-content/themes/sparkling/inc/js/skip-link-focus-fix.js?ver=20140222'></script>
+<script type='text/javascript' src='https://www.codediesel.com/wp-includes/js/wp-embed.min.js?ver=4.8.5'></script>
+<script type='text/javascript' src='https://www.codediesel.com/wp-content/plugins/multi-column-tag-map/mctagmap.js?mctm_ver=12.0.4&#038;ver=1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.codediesel.com/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.4.3'></script>
+<script type='text/javascript' src='https://stats.wp.com/e-201808.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.4.3',blog:'87781247',post:'27',tz:'5.5'} ]);
+	_stq.push([ 'clickTrackerInit', '87781247', '27' ]);
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-299326-8', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
+<!-- Dynamic page generated in 3.627 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2018-02-21 08:12:49 -->
+
+<!-- super cache -->
